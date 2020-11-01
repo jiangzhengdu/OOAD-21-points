@@ -1,0 +1,21 @@
+
+    类：
+    Crad       一张牌  属性：花色 点数 是否隐藏
+    Crads      一副牌
+    Player     玩家
+    Dealer     庄家
+    Round      游戏的轮
+    OneGame    开始一次游戏，初始化一个游戏包括 玩家  庄家 牌
+    CardGame   总的game，可以实现
+
+
+
+
+
+
+
+
+
+
+
+
