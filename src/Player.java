@@ -5,7 +5,7 @@ public class Player {
     protected String name;
 
     protected int tempBet;   //下注数值
-    protected  ArrayList<Card> pCards=new ArrayList<>();  //自己拥有的牌
+    protected  ArrayList<Card> playerSuit =new ArrayList<>();  //自己拥有的牌
 
     protected int currentPoints;
 
@@ -27,8 +27,8 @@ public class Player {
         return tempBet;
     }
 
-    public ArrayList<Card> getpCards() {
-        return pCards;
+    public ArrayList<Card> getPlayerSuit() {
+        return playerSuit;
     }
 
     public void setTempBet(int tempBet) {
@@ -43,17 +43,17 @@ public class Player {
         this.currentPoints = currentPoints;
     }
 
-    public void getRandomCard(Cards cards){
-        Card card=cards.randomCard();
-        pCards.add(card);
+    public void getRandomCard(Suit suit){
+        Card card= suit.randomCard();
+        playerSuit.add(card);
     }
     public void deleteCard(){
-        pCards=new ArrayList<>();
+        playerSuit =new ArrayList<>();
     }
     public void caculateCurrentPoints(){
         int CurrentPoints=0;
-        for(Card card :pCards){
-            CurrentPoints+=card.getNumber();
+        for(Card card : playerSuit){
+            CurrentPoints+=card.getValue();
         }
         this.currentPoints=CurrentPoints;
 

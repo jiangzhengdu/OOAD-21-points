@@ -8,12 +8,14 @@ public class Round {
         return false;
     }
 
-    //show卡面
+    /**
+     *  打印一张牌
+     * @param card 一张牌
+     */
     public void printCard(Card card) {
         if (card.hidden == 1)
-            System.out.println("Hidden ");
+            System.out.print("Hidden ");
         else {
-            //System.out.print(card.number + " of ");
             if (card.type == 0)
                 System.out.print("方块" + card.number + " ");
             else if (card.type == 1)
@@ -22,12 +24,20 @@ public class Round {
                 System.out.print("红桃" + card.number + " ");
             else if (card.type == 3)
                 System.out.print("黑桃" + card.number + " ");
-//            else if (card.type == 4)
-//                System.out.println("小王");
-//            else if (card.type == 5)
-//                System.out.println("大王");
-
         }
+    }
+
+    public void printFinnalCard(Card card) {
+
+            if (card.type == 0)
+                System.out.print("方块" + card.number + " ");
+            else if (card.type == 1)
+                System.out.print("草花" + card.number + " ");
+            else if (card.type == 2)
+                System.out.print("红桃" + card.number + " ");
+            else if (card.type == 3)
+                System.out.print("黑桃" + card.number + " ");
+
     }
 
     /**
@@ -38,100 +48,52 @@ public class Round {
      */
     public void printState(Player player, Dealer dealer) {
         System.out.print("Dealer:");
-        for (Card card : dealer.getdCards())
+        for (Card card : dealer.getDealerSuit())
             printCard(card);
         System.out.println("");
         System.out.print("player" + player.getName() + ":");
-        for (Card card : player.getpCards()) {
+        for (Card card : player.getPlayerSuit()) {
             printCard(card);
         }
         System.out.println("");
     }
 
-    public void CaculatePoint(Player player, Dealer dealer) {
 
+    public void printFinnalStates(ArrayList<Player> players, Dealer dealer) {
+        System.out.print("Dealer:");
+        for (Card card : dealer.getDealerSuit())
+            printFinnalCard(card);
+        System.out.println("");
+        for(Player player:players) {
+            System.out.print("player" + player.getName() + ":");
+            for (Card card : player.getPlayerSuit()) {
+                printFinnalCard(card);
+            }
+        }
+        System.out.println("");
     }
 
-//    /**
-//     *
-//     * @param players
-//     * @param dealer
-//     * @param cards
-//     */
-//    public void startRound(ArrayList<Player> players,Dealer dealer,Cards cards){
-//        dealer.getRandomCard(cards);
-//        for (Player player:players)
-//            player.getRandomCard(cards);
-//     //   printState(players,dealer);
-//    }
 
-    //要几张？
-//    public void startDoubleRound(ArrayList<Player> players,Dealer dealer,Cards cards){
-//        dealer.getRandomCard(cards);
-//        for (Player player:players) {
-//            player.getRandomCard(cards);
-//            player.setTempBet(player.getTempBet()*2);
-//        }
-//        printState(players,dealer);
-//    }
-
-    public void stayRound() {
-
-    }
-
-    public void addRound(Player player, Cards cards) {
-        player.getRandomCard(cards);
+    /**
+     *  在这一个round中，添加一次牌
+     * @param player 玩家
+     * @param suit   本轮游戏的一副牌
+     */
+    public void addRound(Player player, Suit suit) {
+        player.getRandomCard(suit);
         player.caculateCurrentPoints();
     }
 
-
+    /**
+     * 在这一个round中，翻倍赌注
+     * @param player 玩家
+     */
     public void doubleRound(Player player) {
         if (2 * player.getTempBet() <= player.bet)
             player.setTempBet(2 * player.getTempBet());
         else
             System.out.println("本金不足，无法加倍！");
     }
-
-
-    /**
-     * try to decided who is winner dealer or the any player
-     *
-     * @param players the list of players
-     * @param dealer  the dealer
-     */
-//    public String DecidedWinner(ArrayList<Player> players,Dealer dealer){
-//        int WinnerPoints=0;
-//        String WinnerName = "0";
-//        if(dealer.getCurrentPoints()<=21) {
-//            WinnerPoints = dealer.getCurrentPoints();
-//            WinnerName = "dealer";
-//        }
-//        for(Player player :players) {
-//            if (player.currentPoints > WinnerPoints && player.currentPoints <= 21) {
-//                WinnerPoints = player.getCurrentPoints();
-//                WinnerName = player.getName();
-//            }
-//        }
-//        if(dealer.getCurrentPoints()>21) {
-//            System.out.println("dealer is out");
-//            WinnerName="everyone";
-//        }
-//        else if(WinnerPoints<dealer.getCurrentPoints()) {
-//            System.out.println("winner is dealer whose points is " + dealer.getCurrentPoints());
-//        }
-//        else if(WinnerPoints==dealer.getCurrentPoints())
-//        {
-//            System.out.println(WinnerPoints);
-//            System.out.println("it's draw");
-//            WinnerName="no one";
-//        }
-//        else
-//            {
-//            System.out.println("winner is  "+ WinnerName+" whose points is "+WinnerPoints);
-//            System.out.println("dealer's points is "+dealer.getCurrentPoints());
-//            }
-//        return WinnerName;
-//    }
 
     /**
      *
@@ -150,52 +112,61 @@ public class Round {
         for (Player player : players) {
             if (player.currentPoints >= WinnerPoints && player.currentPoints <= 21) {
                 WinnerPoints = player.getCurrentPoints();
-                //  WinnerName = player.getName();
                 isChange = true;
             }
         }
 
+        //产生赢的玩家
         for (Player player : players) {
-            if (player.getCurrentPoints()==WinnerPoints) {
+            if (player.getCurrentPoints()==WinnerPoints&&isChange) {
                 WinnerName.add(player.getName());
             }
         }
+
+
+        if(dealer.getCurrentPoints()>21) {
+            System.out.println("结果：dealer is out");
+            WinnerName.add("dealer out");
+        }
         //庄家胜利
-        if (WinnerPoints < dealer.getCurrentPoints()) {
-            System.out.println("winner is dealer whose points is " + dealer.getCurrentPoints());
+        else if (WinnerPoints == dealer.getCurrentPoints()&&!isChange) {
+            System.out.println("结果：winner is dealer whose points is " + dealer.getCurrentPoints());
             WinnerName.add("dealer");
+
             //平局
         } else if (WinnerPoints == dealer.getCurrentPoints() && isChange) {
-            System.out.println("it's draw");
+            System.out.println("结果：it's draw");
             WinnerName.add("draw");
         }
         //玩家胜利
         else {
-            System.out.println("winner is  " + WinnerName + " whose points is " + WinnerPoints);
+            System.out.println("结果：winner is player" + WinnerName + " whose points is " + WinnerPoints);
             System.out.println("dealer's points is " + dealer.getCurrentPoints());
         }
-
         return WinnerName;
     }
 
+    /**
+     *
+     * @param player    所有的玩家
+     * @param WinnerName    所有的赢家
+     */
     public void checkOutMoney(ArrayList<Player> player, ArrayList<String> WinnerName) {
         for (Player player1 : player) {
+//庄家爆点
+            if(WinnerName.contains("dealer out"))
+                player1.caculateBets(true);
+            //平局
 
-            if(WinnerName.contains("draw")&&WinnerName.contains(player1.getName()))
-                break;
-            if(WinnerName.contains(player1.getName()))
+            else if(WinnerName.contains("dealer"))
+            player1.caculateBets(false);
+            else if(WinnerName.contains("draw")&&WinnerName.contains(player1.getName()))
+                continue;
+
+            else if(WinnerName.contains(player1.getName()))
                 player1.caculateBets(true);
             else
                 player1.caculateBets(false);
-
-//            if (WinnerName.equals("everyone"))
-//                player1.caculateBets(true);
-//            else if (WinnerName.equals("no one"))
-//                break;
-//            else if (player1.getName().equals(WinnerName))
-//                player1.caculateBets(true);
-//            else
-//                player1.caculateBets(false);
         }
     }
 }
