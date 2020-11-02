@@ -146,7 +146,6 @@ public class Round {
         boolean isChange = false;
         if (dealer.getCurrentPoints() <= 21) {
             WinnerPoints = dealer.getCurrentPoints();
-            //     WinnerName = "dealer";
         }
         for (Player player : players) {
             if (player.currentPoints >= WinnerPoints && player.currentPoints <= 21) {
@@ -182,7 +181,7 @@ public class Round {
     public void checkOutMoney(ArrayList<Player> player, ArrayList<String> WinnerName) {
         for (Player player1 : player) {
 
-            if(WinnerName.contains("draw"))
+            if(WinnerName.contains("draw")&&WinnerName.contains(player1.getName()))
                 break;
             if(WinnerName.contains(player1.getName()))
                 player1.caculateBets(true);
