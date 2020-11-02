@@ -7,11 +7,17 @@ public class Suit {
 
     protected Suit(){
         for(int i=0;i<4;i++)
-            for(int j=1;j<=13;j++)
-                if(j>10)
-                    suit.add(new Card(i,j,10));
-                else
-                    suit.add(new Card(i,j,j));
+            for(int j=1;j<=13;j++) {
+                if (j <= 10)
+                    suit.add(new Card(i, String.valueOf(j), j));
+                else if (j == 11)
+                    suit.add(new Card(i, "J", 10));
+                else if (j == 12)
+                    suit.add(new Card(i, "Q", 10));
+                else if (j == 13)
+                    suit.add(new Card(i, "K", 10));
+            }
+
     }
 
     public ArrayList<Card> getCards() {
