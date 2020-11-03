@@ -76,7 +76,7 @@ public class Player {
     public boolean blackJack(){
 
         if(playerSuit.get(0).getNumber().equals("1")&&playerSuit.get(1).getValue()==10&&playerSuit.get(2).getValue()==10) {
-           System.out.println("BlackJack!");
+           System.out.println("Player"+name+"BlackJack!");
             return true;
         }
         else return false;
