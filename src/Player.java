@@ -61,9 +61,25 @@ public class Player {
 
     public void caculateBets(boolean win){
 
-        if(win)
-            this.bet+=this.tempBet;
+        if(win) {
+            if(blackJack())
+                this.bet += 2*this.tempBet;
+            else this.bet += this.tempBet;
+
+        }
         else
             this.bet-=this.tempBet;
+    }
+
+
+
+    public boolean blackJack(){
+
+        if(playerSuit.get(0).getNumber().equals("1")&&playerSuit.get(1).getValue()==10&&playerSuit.get(2).getValue()==10) {
+           System.out.println("BlackJack!");
+            return true;
+        }
+        else return false;
+
     }
 }

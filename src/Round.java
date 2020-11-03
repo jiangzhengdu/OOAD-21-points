@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Round {
 
@@ -140,8 +141,13 @@ public class Round {
         }
         //玩家胜利
         else {
-            System.out.println("结果：winner is player" + WinnerName + " whose points is " + WinnerPoints);
-            System.out.println("dealer's points is " + dealer.getCurrentPoints());
+            if(WinnerName.size()==1) {
+                System.out.println("结果：winner is player" + WinnerName.get(0) + " whose points is " + WinnerPoints);
+            }
+            else
+                System.out.println("结果：winner are players"+Arrays.toString(WinnerName.toArray()));
+                System.out.println("dealer's points is " + dealer.getCurrentPoints());
+
         }
         return WinnerName;
     }
@@ -153,11 +159,10 @@ public class Round {
      */
     public void checkOutMoney(ArrayList<Player> player, ArrayList<String> WinnerName) {
         for (Player player1 : player) {
-//庄家爆点
+            //庄家爆点
             if(WinnerName.contains("dealer out"))
                 player1.caculateBets(true);
             //平局
-
             else if(WinnerName.contains("dealer"))
             player1.caculateBets(false);
             else if(WinnerName.contains("draw")&&WinnerName.contains(player1.getName()))

@@ -64,46 +64,6 @@ public class OneGame {
         }
 
 
-//        if (dealer.getCurrentPoints() <= 21) {
-//            //在每个人分发牌的时候,输入每一个玩家的决定
-//            for (Player player : players) {
-//                while (true) {
-//                    round.printState(player, dealer);
-//                    System.out.println("目前玩家" + player.getName() + "的点数: " + player.getCurrentPoints());
-//                    System.out.println("目前庄家的点数: " + dealer.getCurrentPoints());
-//                    if (player.getCurrentPoints() > 21) {
-//                        System.out.println("玩家" + player.getName() + "超过21点，自动跳过！");
-//                        break;
-//                    }
-//                    System.out.println("请您输入玩家 " + player.getName() + " 的决定:");
-//                    System.out.println("1.add 2.skip 3.double:");
-//                    Scanner input = new Scanner(System.in);
-//                    button = input.next();
-//
-//                    ///choose to add another card or double the temp bets or choose to skip
-//
-//                    if (button.equals("add"))
-//                        round.addRound(player, suit);
-//                    else if (button.equals("double")) {
-//                        round.doubleRound(player);
-//                    } else if (button.equals("skip"))
-//                        break;
-//                    else System.out.println("add or skip or Double");
-//                }
-//            }
-//            //扣钱或者给钱
-//
-//        } else {
-//
-//            for (Player player : players) {
-//                round.printState(player, dealer);
-//                Winnername.add(player.getName());
-//            }
-//            System.out.println("Dealer is out 21,round skips");
-//
-//            round.checkOutMoney(players, Winnername);
-//        }
-
         //发牌阶段,默认没有人在不要牌的list中
         ArrayList<Player> notWantedCardList = new ArrayList<>();
         int index = 0;
